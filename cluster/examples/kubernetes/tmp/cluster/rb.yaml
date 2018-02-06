@@ -1,0 +1,52 @@
+apiVersion: v1
+items:
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: 2018-02-06T07:23:05Z
+    name: rook-api
+    namespace: rook
+    ownerReferences:
+    - apiVersion: v1alpha1
+      blockOwnerDeletion: true
+      kind: Cluster
+      name: rook
+      uid: 721ddaff-0b0e-11e8-8ab2-42010a8a007b
+    resourceVersion: "52362"
+    selfLink: /apis/rbac.authorization.k8s.io/v1/namespaces/rook/rolebindings/rook-api
+    uid: 930ed8bb-0b0e-11e8-8ab2-42010a8a007b
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: rook-api
+  subjects:
+  - kind: ServiceAccount
+    name: rook-api
+    namespace: rook
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    creationTimestamp: 2018-02-06T07:23:06Z
+    name: rook-ceph-osd
+    namespace: rook
+    ownerReferences:
+    - apiVersion: v1alpha1
+      blockOwnerDeletion: true
+      kind: Cluster
+      name: rook
+      uid: 721ddaff-0b0e-11e8-8ab2-42010a8a007b
+    resourceVersion: "52377"
+    selfLink: /apis/rbac.authorization.k8s.io/v1/namespaces/rook/rolebindings/rook-ceph-osd
+    uid: 9327b487-0b0e-11e8-8ab2-42010a8a007b
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: rook-ceph-osd
+  subjects:
+  - kind: ServiceAccount
+    name: rook-ceph-osd
+    namespace: rook
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

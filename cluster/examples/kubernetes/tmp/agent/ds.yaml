@@ -1,0 +1,70 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  labels:
+    app: rook-agent
+  name: rook-agent
+  namespace: rook-system
+spec:
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: rook-agent
+  template:
+    metadata:
+      labels:
+        app: rook-agent
+    spec:
+      containers:
+      - args:
+        - agent
+        env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: spec.nodeName
+        image: illya/mook:latest
+        name: rook-agent
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /flexmnt
+          name: flexvolume
+        - mountPath: /dev
+          name: dev
+        - mountPath: /sys
+          name: sys
+        - mountPath: /lib/modules
+          name: libmodules
+      hostNetwork: true
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      serviceAccount: rook-agent
+      serviceAccountName: rook-agent
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - hostPath:
+          path: /home/kubernetes/flexvolume
+          type: ""
+        name: flexvolume
+      - hostPath:
+          path: /dev
+          type: ""
+        name: dev
+      - hostPath:
+          path: /sys
+          type: ""
+        name: sys
+      - hostPath:
+          path: /lib/modules
+          type: ""
+        name: libmodules
+  templateGeneration: 1
+  updateStrategy:
+    type: OnDelete

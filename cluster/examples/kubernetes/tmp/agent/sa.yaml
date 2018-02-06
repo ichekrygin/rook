@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: rook-agent
+  namespace: rook-system
+secrets:
+- name: rook-agent-token-7tsw4
