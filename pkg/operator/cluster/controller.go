@@ -473,12 +473,6 @@ func (c *cluster) createInstance(rookImage string) error {
 		return fmt.Errorf("failed to start the ceph mgr. %+v", err)
 	}
 
-	c.apis = api.New(c.context, c.Namespace, rookImage, c.Spec.Placement.GetAPI(), c.Spec.HostNetwork, c.Spec.Resources.API, c.ownerRef)
-	err = c.apis.Start()
-	if err != nil {
-		return fmt.Errorf("failed to start the REST api. %+v", err)
-	}
-
 	// Start the OSDs
 	c.osds = osd.New(c.context, c.Namespace, rookImage, c.Spec.Storage, c.Spec.DataDirHostPath,
 		c.Spec.Placement.GetOSD(), c.Spec.HostNetwork, c.Spec.Resources.OSD, c.ownerRef)
